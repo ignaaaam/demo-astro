@@ -1,5 +1,6 @@
 ---
     import { type APISpaceXResponse } from '../types/api'
+    import CardLaunch from '../components/CardLaunch.astro'
 
     const res = await fetch('https://api.spacexdata.com/v5/launches/query', {
         method: "POST",
@@ -17,13 +18,22 @@
         }),
     })
 
-    const docs = (await res.json()) as APISpaceXResponse
-
-    console.log(data)
+    const { docs: launches } = (await res.json()) as APISpaceXResponse
+    console.log(launches)
 ---
 
 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-<article>
-
-</article>
+    {
+        launches.map((launch) => 
+            <CardLaunch 
+                id={launch.id}
+                img={launch.links.patch.small}
+                details={launch.details}
+                flightNumber={launch.flight_number}
+                success={launch.success}
+            
+            />
+            
+        )
+    }
 </div>
