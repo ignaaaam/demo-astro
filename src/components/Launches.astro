@@ -19,19 +19,17 @@
     })
 
     const { docs: launches } = (await res.json()) as APISpaceXResponse
-    console.log(launches)
 ---
 
 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {
-        launches.map((launch) => 
+        launches.map(({ id, links, details, flight_number: flightNumber, success}) => 
             <CardLaunch 
-                id={launch.id}
-                img={launch.links.patch.small}
-                details={launch.details}
-                flightNumber={launch.flight_number}
-                success={launch.success}
-            
+                id={id}
+                img={links.patch.small}
+                details={details}
+                flightNumber={flightNumber}
+                success={success}
             />
             
         )
